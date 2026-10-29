@@ -1,7 +1,10 @@
-![alt text](image.png)
-## Run locally
+Project Name
 Enterprise Infrastructure Monitoring & Self-Healing Platform
-Overview
+
+## Problem Solved
+Automates infrastructure deployment, monitoring, security scanning, alerting, and observability while reducing manual operational effort.
+
+## Run locally
 Enterprise Infrastructure Monitoring & Self-Healing Platform is a DevOps-focused application designed to demonstrate modern infrastructure automation, monitoring, observability, security, and CI/CD practices.
 
 ## The platform provides:
@@ -70,8 +73,46 @@ Open `http://127.0.0.1:8000/docs` for the API. Useful endpoints:
 Set `CPU_ALERT_THRESHOLD` and `MEMORY_ALERT_THRESHOLD` to percentages between
 0 and 100. Defaults are 85. The process endpoint exposes host process names and
 PIDs, so keep the service on a trusted network.
-
 Run tests with `pytest`.
+
+
+Environment Variables
+Variable	            Default     	    Description
+CPU_ALERT_THRESHOLD	        85	        CPU usage threshold
+MEMORY_ALERT_THRESHOLD  	85	        Memory usage threshold
+DISK_ALERT_THRESHOLD	    85	        Disk usage threshold
+
+Example:
+set CPU_ALERT_THRESHOLD=90
+set MEMORY_ALERT_THRESHOLD=90
+set DISK_ALERT_THRESHOLD=90
+Run tests with `pytest`.
+
+Run:
+$env:CPU_ALERT_THRESHOLD=70
+python -m uvicorn app.main:app --reload
+
+Then:
+GET /alerts
+
+Response:
+JSON
+{
+"cpu_threshold": 70,
+"memory_threshold": 85,
+"disk_threshold": 85,
+"alerts": [
+"SYSTEM HEALTHY"
+]
+}
+
+Now you can say:
+Alert thresholds are configurable through environment variables rather than hardcoded values. This allows the same application image to be deployed across Development, QA, and Production environments with different monitoring policies without code changes.
+
+## Containers
+```powershell
+docker compose up --build
+```
 
 ## Containers
 ```powershell
