@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: "email-alert"
+
+receivers:
+- name: "email-alert"
+
+  email_configs:
+  - to: "devops-team@example.com"
+    from: "monitoring@example.com"
+    smarthost: "smtp.example.com:587"
+    auth_username: "monitoring@example.com"
+    auth_password: "password"

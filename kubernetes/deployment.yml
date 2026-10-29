@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: monitoring-app
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: monitoring-app
+
+  template:
+
+    metadata:
+      labels:
+        app: monitoring-app
+
+    spec:
+
+      containers:
+      - name: monitoring-app
+        image: infra-monitoring:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8000
+
+        envFrom:
+
+        - configMapRef:
+            name: monitoring-config
+
+        - secretRef:
+            name: monitoring-secret
+
+        livenessProbe:
+
+          httpGet:
+            path: /health
+            port: 8000
+
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+        readinessProbe:
+
+          httpGet:
+            path: /health
+            port: 8000
+
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        resources:
+
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-config
+data:
+  APP_NAME: "Infrastructure Monitoring Platform"
+  LOG_LEVEL: "INFO"
+  ENVIRONMENT: "DEV"
